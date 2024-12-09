@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Log In</title>
+</head>
+
+<body>
+	<form>
+		<h1>Log In</h1>
+		<div>email : <input type="email" id="signInEmail"></div>
+		<div>password : <input type="password" id="signInPassword"></div>
+		<button type="submit" id="signInButton">Log in</button>
+	</form>
+
+	<script type="module">
+
+		const firebaseConfig = {
+			apiKey: "AIzaSyDYdlHEAUZZyW761jnGdWyrqL4_19HU3bc",
+			authDomain: "eightt-2f4b8.firebaseapp.com",
+			projectId: "eightt-2f4b8",
+			storageBucket: "eightt-2f4b8.firebasestorage.app",
+			messagingSenderId: "634657356450",
+			appId: "1:634657356450:web:fa1c6e534322856c50b5fb",
+			measurementId: "G-W58NY77C7X"
+		};
+
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+		const app = initializeApp(firebaseConfig);
+		import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+		const auth = getAuth();
+
+		document.getElementById('signInButton').addEventListener('click', (event) => {
+			event.preventDefault()
+			const signInEmail = document.getElementById('signInEmail').value
+			const signInPassword = document.getElementById('signInPassword').value
+			signInWithEmailAndPassword(auth, signInEmail, signInPassword)
+				.then((userCredential) => {
+					// Signed in 
+					console.log(userCredential)
+					const user = userCredential.user;
+					// ...
+				})
+				.catch((error) => {
+					console.log('실패')
+					const errorCode = error.code;
+					const errorMessage = error.message;
+				});
+
+		})
+	</script>
+
+	<button onclick="location.href='sign_up_gp.html'">Go to sign up</button>
+</body>
+
+</html>
